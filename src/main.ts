@@ -16,7 +16,7 @@ async function main() {
   if (userAgent != null) opts.userAgent = userAgent
   if (previews != null) opts.previews = previews.split(',')
   const github = new GitHub(token, opts)
-  let script = core.getInput('script')
+  let script = core.getInput('script', { required: true })
   const file = core.getInput('file')
 
   console.log('script', script)
