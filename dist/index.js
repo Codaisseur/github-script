@@ -9301,11 +9301,7 @@ function callAsyncFunction(args, source) {
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __webpack_require__(747);
 
-// EXTERNAL MODULE: external "path"
-var external_path_ = __webpack_require__(622);
-
 // CONCATENATED MODULE: ./src/main.ts
-
 
 
 
@@ -9325,24 +9321,14 @@ async function main() {
     if (previews != null)
         opts.previews = previews.split(',');
     const github = new lib_github.GitHub(token, opts);
-    let script = Object(core.getInput)('script', { required: true });
+    let script = Object(core.getInput)('script');
     const file = Object(core.getInput)('file');
-    Object(core.debug)('------');
-    Object(core.debug)(script);
-    Object(core.debug)(file);
-    // @ts-ignore
-    Object(core.debug)(process.env.GITHUB_WORKSPACE);
-    Object(core.debug)(__dirname);
-    Object(core.debug)(__filename);
-    Object(core.debug)('-------');
-    // @ts-ignore
-    const filePath = Object(external_path_.join)(process.env.GITHUB_WORKSPACE, file);
-    Object(core.debug)(filePath);
-    if (Object(external_fs_.existsSync)(filePath)) {
-        Object(core.debug)('Inside try block');
-        script = Object(external_fs_.readFileSync)(filePath, 'utf-8');
+    if (file) {
+        if (!Object(external_fs_.existsSync)(file)) {
+            throw new Error('file can\'t be found: ' + file);
+        }
+        script = Object(external_fs_.readFileSync)(file, 'utf-8');
     }
-    Object(core.debug)(script);
     // Using property/value shorthand on `require` (e.g. `{require}`) causes compilatin errors.
     const result = await callAsyncFunction({ require: __webpack_require__(875), github, context: lib_github.context, core: core }, script);
     let encoding = Object(core.getInput)('result-encoding');

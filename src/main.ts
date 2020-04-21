@@ -17,28 +17,17 @@ async function main() {
   if (userAgent != null) opts.userAgent = userAgent
   if (previews != null) opts.previews = previews.split(',')
   const github = new GitHub(token, opts)
-  let script = core.getInput('script', { required: true })
+  
+  let script = core.getInput('script')
   const file = core.getInput('file')
 
+  if(file){
+    if(!existsSync(file)){
+      throw new Error('file can\'t be found: ' + file)
+    }
 
-  core.debug('------')
-  core.debug(script);
-  core.debug(file);
-  // @ts-ignore
-  core.debug(process.env.GITHUB_WORKSPACE)
-  core.debug(__dirname)
-  core.debug(__filename)
-  core.debug('-------')
-
-    // @ts-ignore
-  const filePath = join(process.env.GITHUB_WORKSPACE, file)
-  core.debug(filePath)
-  if(existsSync(filePath)){
-    core.debug('Inside try block');
-    script = readFileSync(filePath, 'utf-8')
+    script = readFileSync(file, 'utf-8')
   }
-
-  core.debug(script);
 
   // Using property/value shorthand on `require` (e.g. `{require}`) causes compilatin errors.
   const result = await callAsyncFunction(
