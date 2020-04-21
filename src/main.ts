@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import {context, GitHub} from '@actions/github'
 import {callAsyncFunction} from './async-function'
-import fs from 'fs'
+import { existsSync, readFileSync } from 'fs'
 
 process.on('unhandledRejection', handleError)
 main().catch(handleError)
@@ -22,8 +22,8 @@ async function main() {
   console.log('script', script)
   console.log('file', file)
 
-  if(fs.existsSync(file)){
-    script = fs.readFileSync(file, 'utf-8')
+  if(existsSync(file)){
+    script = readFileSync(file, 'utf-8')
   }
 
   console.log('script', script)
