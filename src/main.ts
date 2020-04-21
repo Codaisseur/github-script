@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import {context, GitHub} from '@actions/github'
 import {callAsyncFunction} from './async-function'
+import fs from 'fs'
 
 process.on('unhandledRejection', handleError)
 main().catch(handleError)
@@ -15,7 +16,17 @@ async function main() {
   if (userAgent != null) opts.userAgent = userAgent
   if (previews != null) opts.previews = previews.split(',')
   const github = new GitHub(token, opts)
-  const script = core.getInput('script', {required: true})
+  let script = core.getInput('script')
+  const file = core.getInput('file')
+
+  console.log('script', script)
+  console.log('file', file)
+
+  if(fs.existsSync(file)){
+    script = fs.readFileSync(file, 'utf-8')
+  }
+
+  console.log('script', script)
 
   // Using property/value shorthand on `require` (e.g. `{require}`) causes compilatin errors.
   const result = await callAsyncFunction(

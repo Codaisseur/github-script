@@ -8,6 +8,8 @@ inputs:
   script:
     description: The script to run
     required: true
+  file:
+    description: The script file to run
   github-token:
     description: The GitHub token used to create an authenticated client
     default: ${{ github.token }}
