@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import {context, GitHub} from '@actions/github'
 import {callAsyncFunction} from './async-function'
 import { existsSync, readFileSync } from 'fs'
+import { join } from 'path'
 
 process.on('unhandledRejection', handleError)
 main().catch(handleError)
@@ -29,9 +30,12 @@ async function main() {
   core.debug(__filename)
   core.debug('-------')
 
-  if(existsSync(file)){
+    // @ts-ignore
+  const filePath = join(process.env.GITHUB_WORKSPACE, file)
+  core.debug(filePath)
+  if(existsSync(filePath)){
     core.debug('Inside try block');
-    script = readFileSync(file, 'utf-8')
+    script = readFileSync(filePath, 'utf-8')
   }
 
   core.debug(script);

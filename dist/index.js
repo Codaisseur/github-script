@@ -9301,7 +9301,11 @@ function callAsyncFunction(args, source) {
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __webpack_require__(747);
 
+// EXTERNAL MODULE: external "path"
+var external_path_ = __webpack_require__(622);
+
 // CONCATENATED MODULE: ./src/main.ts
+
 
 
 
@@ -9331,9 +9335,12 @@ async function main() {
     Object(core.debug)(__dirname);
     Object(core.debug)(__filename);
     Object(core.debug)('-------');
-    if (Object(external_fs_.existsSync)(file)) {
+    // @ts-ignore
+    const filePath = Object(external_path_.join)(process.env.GITHUB_WORKSPACE, file);
+    Object(core.debug)(filePath);
+    if (Object(external_fs_.existsSync)(filePath)) {
         Object(core.debug)('Inside try block');
-        script = Object(external_fs_.readFileSync)(file, 'utf-8');
+        script = Object(external_fs_.readFileSync)(filePath, 'utf-8');
     }
     Object(core.debug)(script);
     // Using property/value shorthand on `require` (e.g. `{require}`) causes compilatin errors.
