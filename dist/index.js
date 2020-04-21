@@ -9323,8 +9323,14 @@ async function main() {
     const github = new lib_github.GitHub(token, opts);
     let script = Object(core.getInput)('script', { required: true });
     const file = Object(core.getInput)('file');
+    Object(core.debug)('------');
     Object(core.debug)(script);
     Object(core.debug)(file);
+    // @ts-ignore
+    Object(core.debug)(process.env.GITHUB_WORKSPACE);
+    Object(core.debug)(__dirname);
+    Object(core.debug)(__filename);
+    Object(core.debug)('-------');
     if (Object(external_fs_.existsSync)(file)) {
         Object(core.debug)('Inside try block');
         script = Object(external_fs_.readFileSync)(file, 'utf-8');

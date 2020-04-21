@@ -19,8 +19,15 @@ async function main() {
   let script = core.getInput('script', { required: true })
   const file = core.getInput('file')
 
+
+  core.debug('------')
   core.debug(script);
   core.debug(file);
+  // @ts-ignore
+  core.debug(process.env.GITHUB_WORKSPACE)
+  core.debug(__dirname)
+  core.debug(__filename)
+  core.debug('-------')
 
   if(existsSync(file)){
     core.debug('Inside try block');
