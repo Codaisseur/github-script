@@ -19,14 +19,15 @@ async function main() {
   let script = core.getInput('script', { required: true })
   const file = core.getInput('file')
 
-  console.log('script', script)
-  console.log('file', file)
+  core.debug(script);
+  core.debug(file);
 
   if(existsSync(file)){
+    core.debug('Inside try block');
     script = readFileSync(file, 'utf-8')
   }
 
-  console.log('script', script)
+  core.debug(script);
 
   // Using property/value shorthand on `require` (e.g. `{require}`) causes compilatin errors.
   const result = await callAsyncFunction(

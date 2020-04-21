@@ -9323,12 +9323,13 @@ async function main() {
     const github = new lib_github.GitHub(token, opts);
     let script = Object(core.getInput)('script', { required: true });
     const file = Object(core.getInput)('file');
-    console.log('script', script);
-    console.log('file', file);
+    Object(core.debug)(script);
+    Object(core.debug)(file);
     if (Object(external_fs_.existsSync)(file)) {
+        Object(core.debug)('Inside try block');
         script = Object(external_fs_.readFileSync)(file, 'utf-8');
     }
-    console.log('script', script);
+    Object(core.debug)(script);
     // Using property/value shorthand on `require` (e.g. `{require}`) causes compilatin errors.
     const result = await callAsyncFunction({ require: __webpack_require__(875), github, context: lib_github.context, core: core }, script);
     let encoding = Object(core.getInput)('result-encoding');
